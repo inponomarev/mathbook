@@ -1,0 +1,150 @@
+\documentclass[11pt,a5paper,twoside]{book}
+
+\usepackage{mystyle}
+\usepackage{multibib}
+\usepackage[usenames]{color} 
+
+\newcites{logic,sets,burb}%
+{Математическая логика,Теория множеств,Роды структур}
+
+\newcommand{\theauthor}{Пономарёв И.~Н.}
+\newcommand{\thetitle}{Введение в~математическую логику и~роды структур}
+\newcommand{\ISBN}{ISBN 5-7417-0174-4}
+
+\widowpenalty=10000
+\clubpenalty=5000
+\begin{document}
+\include{names}
+
+%пустая страница для печати выдач и начало счёта страниц
+%\thispagestyle{empty}
+%\setcounter{page}{0}
+%---
+%\newpage
+
+
+\thispagestyle{empty}
+\begin{center}
+{\color{red} ВНИМАНИЕ! Эта электронная версия книги содержит исправления ошибок и~опечаток, замеченных на~АПРЕЛЬ~2016~года и~ряд небольших улучшений по~сравнению с~бумажной версией. Актуальная обновляемая версия книги доступна на сайте \url{http://inponomarev.ru}.}
+\end{center}
+\begin{center}
+\LARGE И. Н. Пономарёв
+\end{center}
+
+%\vspace*{\fill}
+\vspace{32pt}
+
+\begin{center}
+%\LARGE \textbf{\MakeUppercase{\thetitle}}
+\LARGE \textbf{ВВЕДЕНИЕ\\ В МАТЕМАТИЧЕСКУЮ ЛОГИКУ\\ И РОДЫ СТРУКТУР}
+\end{center}
+
+\vspace{6pt}
+
+\begin{center}
+\emph{Учебное пособие}
+\end{center}
+
+
+\vspace{\fill}
+\begin{center}
+Москва 
+
+МФТИ
+
+2007
+\end{center}
+\newpage
+
+\thispagestyle{empty}
+
+\begin{tabbing}
+\noindent УДК \=510.6+510.22(075)\\
+\noindent ББК\>22.12я73\\
+\noindent \>П56
+\end{tabbing}
+
+%\vspace{6pt}
+
+\begin{center}
+
+{\small Р е ц е н з е н т ы:}
+
+%{\small доктор тех. наук, профессор В. Э. Вольфенгаген,}
+{\small кафедра <<Криптология и дискретная математика>>\\ Московского инженерно-физического института,}
+
+{\small доктор физ.-мат. наук, профессор Ю. Н. Павловский}
+
+\end{center}
+
+\vspace{6pt}
+
+
+\newlength{\cardind}
+\settowidth{\cardind}{П56\hardspace}
+
+\noindent\hspace{\cardind}\textbf{\theauthor}
+
+\noindent\hangindent=\cardind П56\hardspace\quad\thetitle: Учебное пособие.~--- М.:~МФТИ,~2007.~--- \pageref{theend}~с.
+
+\vspace{4pt}
+
+\noindent\hspace{\cardind}\quad\ISBN
+
+\vspace{4pt}
+
+\small\noindent\hangindent=\cardind\hangafter=0\quad В учебном пособии, написанном по материалам семинаров, проводившихся автором в~Московском физико-техническом институте, изложены элементы классической логики и аксиоматической теории множеств, а также аппарат родов структур Бурбаки. В~книге применяется стандартная (не бурбаковская) терминология и аксиоматика логики и теории множеств, что позволяет использовать это пособие совместно с другими учебниками. 
+
+\small\noindent\hangindent=\cardind\hangafter=0\quad Предназначено для студентов младших курсов факультета инноваций и~высоких технологий МФТИ. Пособие разработано в рамках инновационной образовательной программы <<Разработка методического обеспечения учебного процесса>> по направлению <<Наукоемкие технологии и экономика инноваций>>.\normalsize
+
+\hspace{\fill}\textbf{\small УДК 510.6+510.22(075)}
+
+\hspace{\fill}\textbf{\small ББК 22.12я73}
+
+\vspace*{\fill}
+
+\begin{tabbing}
+\noindent\footnotesize \textbf{\ISBN}\hspace{4.5cm}\=\footnotesize \copyright\ \theauthor, 2007\\
+\noindent\>\footnotesize \copyright\ МФТИ, 2007\\	
+\end{tabbing}
+
+
+\nocitelogic{Ersh04,Lavrov04,Kleene05,Kleene57,Kolm05,VereShen2}
+
+\include{preface}
+\chapter{Элементы математической логики}
+\label{chapter:logic}
+
+\input{sec_1_1}
+\input{sec_1_2}
+\input{sec_1_3}
+\input{sec_1_4}
+\input{sec_1_5}
+\chapter{Элементы теории множеств}
+\label{chapter:sets}
+\nocitesets{VereShen1,Fraenk66,Jech1973,Kazim2000,Kurat1970,Cohen1969,Haus04,Yash2002}
+\input{sec_2_1}
+\input{sec_2_2}
+\input{sec_2_3}
+\input{sec_2_4}
+\input{sec_2_5}
+\input{sec_2_6}
+\chapter{Роды структур}
+\label{chapter:struct}
+\input{sec_3_1}
+\input{sec_3_2}
+\input{sec_3_3}
+\nociteburb{Bourbaki1,Pavlovsk98,Pavlovsk03}
+\include{bibliography}
+
+\tableofcontents
+
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{center}
+\scriptsize выходные данные
+\end{center}
+\vspace{\fill}
+\label{theend}
+\end{document}

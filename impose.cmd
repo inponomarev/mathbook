@@ -1,0 +1,9 @@
+@echo off
+echo Generating Postscript file...
+dvips math.dvi
+
+echo Merging every two pages into one...
+pstops -pa4 2:0L(1w,0)+1L(1w,0.5h) math.ps math2.ps
+
+rem echo Creating PDF file...
+rem pdf2ps math2.ps math.pdf

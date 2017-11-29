@@ -1,0 +1,316 @@
+%Русификация
+\RequirePackage{../texcommon/russtd}
+
+%------------------------------------------------------
+%Специальные пакеты
+
+\RequirePackage{amssymb}          
+\RequirePackage{longtable}        % для таблиц, разрывающихся между страницами
+\RequirePackage{graphics}
+\RequirePackage{multicol}
+
+\RequirePackage{amsthm}          %управление стилем генерации мат. утверждений
+% amsmath не включать во избежания конфликтов
+
+%
+\RequirePackage{ragged2e} %raggedright с переносами
+\RequirePackage{xspace}
+%------------------------------------------------------
+%Параметры страницы
+
+%Поля
+\RequirePackage[top=25mm, bottom=20mm, left=15mm, right=16mm]{geometry}
+
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+\hbox{}
+\thispagestyle{empty}
+\newpage
+\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+
+%Колонтитулы
+\headheight=18pt
+\headsep=6pt
+\footskip=0pt
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\renewcommand{\chaptermark}[1]{\markboth{{Гл. \thechapter.\ #1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{{\S\,\thesection.\ #1}}}
+
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\newcommand{\headertitle}[1]{}
+%\fancyhead[CO]{\rightmark}
+%\fancyhead[CE]{\leftmark}
+\fancyhead[RO]{\footnotesize \rightmark \normalsize \hspace{1em} \small \thepage}
+\fancyhead[LE]{\small \thepage \normalsize \hspace{1em} \footnotesize \leftmark}
+\fancypagestyle{plain}{
+   \fancyhf{}
+   \renewcommand{\headrulewidth}{0pt}} 
+   
+%--------------------------------------------------------
+%левая и правая скобки для автоматики подсчёта скобочного баланса
+%(использовать в случае, когда хотим намеренно ввести небалансир. скобки)
+\newcommand{\lp}{(}
+\newcommand{\rp}{)}
+%--------------------------------------------------------
+
+%Стиль заголовка главы % normal 11pt -> large = 12pt, Large = 14pt
+\def\@makechapterhead#1{%
+  %\vspace*{3cm}%
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        \footnotesize Г\,Л\,А\,В\,А \space \large \thechapter
+        \par\nobreak
+        \vskip 15\p@
+      \fi
+    \fi
+    \interlinepenalty\@M
+    \Large \bfseries \MakeUppercase{#1}\par\nobreak
+    \vskip 20\p@
+  }}
+
+\def\@makeschapterhead#1{%
+  %\vspace*{50\p@}%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \Large \bfseries  \MakeUppercase{#1}\par\nobreak
+    \vskip 40\p@
+  }}
+
+
+%Стиль заголовка параграфа
+\renewcommand{\section}{\@startsection{section}{1}{0pt}%
+{-3.5ex plus -1ex minus -.2ex}{2.3ex plus.2ex}%
+{\raggedright\normalfont\large\bfseries\S\,}} %размер и жирность
+\def\@seccntformat#1{\csname the#1\endcsname.\quad} %номер параграфа --- с точкой в конце
+  
+\renewcommand*\l@chapter[2]{\l@schapter{\chaptername\,#1}{#2}}
+
+\def\toclevel@schapter{0} %для работы hyperref
+
+\newcommand*\l@schapter[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
+
+\renewcommand*\l@section[2]{\@dottedtocline{1}{1.5em}{2.3em}{\S\,#1}{#2}}
+
+%-----------------------------------------------------------------
+%Точка после номера раздела в оглавлении
+
+\def\numberline#1{\hb@xt@\@tempdima{#1.\hfil}} 
+  
+%--------------------------------------------------------
+%Русский стиль нумерованного перечисления
+\renewcommand{\labelenumi}{\arabic{enumi}\rp\ }
+
+
+%--------------------------------------------------------
+%пункты параграфов
+\def\hardspace{\hspace{4 pt}}
+\newcounter{punkt}[section]
+\newcommand*{\p}[1][]{\refstepcounter{punkt}\textbf{\arabic{punkt}.\hardspace{#1}}}
+
+%Теоремы, леммы, упражнения
+
+\newcommand{\AC}{${}^\circ$}
+
+\newtheorem{theorem}{Теорема}
+\newtheorem{theoremAC}[theorem]{\AC Теорема}
+\newtheorem{lemma}[theorem]{Лемма}
+\newtheorem{lemmaAC}[theorem]{\AC Лемма}
+\newtheorem*{follow}{Следствие}
+\newtheorem*{followAC}{\AC Следствие}
+
+%начало и конец доказательства
+%оформить как environment --- не лучшая идея, т. к. есть 
+%доказательства, заканчивающиеся списком. в этом случае 
+%символ QED некрасиво висит на следующей после списка строке.
+\def\beginproof{\ensuremath{\lhd}}
+\def\endproof{\ensuremath{\rhd}}
+
+\newcounter{exerc}
+\newenvironment{exercise}
+  {\par\refstepcounter{exerc}\small{\bfseries Упр.\hardspace\arabic{exerc}.\hardspace}}
+  {\par\normalsize}
+
+%-----------------------------------------------------------
+
+%определения сокращающих символов
+\def\imp{\Rightarrow}          %импликация
+\def\lequals{\Leftrightarrow}  %эквивалентность
+\def\Sheff{\mathbin{|}}        %штрих Шеффера
+\def\&{\mathbin{\char'046}}    %конъюнкция (хорошо бы другое имя)
+
+%набор переменных вида x_1, ... x_n
+\def\vect#1#2{#1_1,\ldots #1_{#2}}
+
+%Значки "истина" и "ложь"
+\newcommand{\true}{\ensuremath{\mathfrak t}}
+\newcommand{\false}{\ensuremath{\mathfrak f}}
+
+%значок для множества частей
+\def\parts{\mathfrak P}
+
+%Математические операторы (вместо amsmath)
+\def\DeclareMathOperator#1#2{\newcommand{#1}{\mathop{\mathrm{#2}}\nolimits}}
+\DeclareMathOperator{\pr}{pr}
+\DeclareMathOperator{\Ord}{Ord}
+\DeclareMathOperator{\Card}{Card}
+\DeclareMathOperator{\id}{id}
+\def\Pr{\mathrm{Pr}}
+
+
+%------------------------------------------------------------------
+%Повтор перенесённого символа в начале строки
+%(из исходников книг Верещагина--Шеня)
+
+\def\hm#1{#1\nobreak\discretionary{}{\hbox{\m@th$#1$}}{}}
+
+\let\oldin=\in
+\def\in{\hm\oldin}
+
+\let\oldsubseteq=\subseteq
+\def\subseteq{\hm\oldsubseteq}
+
+\let\oldsim=\sim
+\def\sim{\hm\oldsim}
+
+\let\oldimp=\imp
+\def\imp{\hm\oldimp}
+
+\let\oldlequals=\lequals
+\def\lequals{\hm\oldlequals}
+
+\let\oldcirc=\circ
+\def\circ{\hm\oldcirc}
+
+\let\oldtimes=\times
+\def\times{\hm\oldtimes}
+
+\let\oldand=\&
+\def\&{\hm\oldand}
+
+\let\oldvee=\vee
+\def\vee{\hm\oldvee}
+
+\let\oldneq=\neq
+\def\neq{\hm\oldneq}
+
+%\let\oldvdash=\vdash
+%\def\vdash{\hm\oldvdash}
+
+\mathcode`\<="8000{\catcode`\<=\active\gdef<{\hm{\mathchar"313C}}}
+\mathcode`\=="8000{\catcode`\==\active\gdef={\hm{\mathchar"303D}}}
+\mathcode`\>="8000{\catcode`\>=\active\gdef>{\hm{\mathchar"313E}}}
+\mathcode`\+="8000{\catcode`\+=\active\gdef+{\hm{\mathchar"202B}}}
+ 
+
+
+%-------------------------------------------------------------
+%мосты (для построения "скелетов" формул)
+%overbracket & underbracket
+%http://www.tug.org/TeXnik/mainFAQ.cgi?file=underbracket/bracket
+
+\def\overbracket{\@ifnextchar [ {\@overbracket} {\@overbracket
+[\@bracketheight]}}
+\def\@overbracket[#1]{\@ifnextchar [ {\@over@bracket[#1]}
+{\@over@bracket[#1][0.3em]}}
+\def\@over@bracket[#1][#2]#3{%\message {Overbracket: #1,#2,#3}
+\mathop {\vbox {\m@th \ialign {##\crcr \noalign {\kern 3\p@
+\nointerlineskip }\downbracketfill {#1}{#2}
+                              \crcr \noalign {\kern 3\p@ }
+                              \crcr  $\hfil \displaystyle {#3}\hfil $%
+                              \crcr} }}\limits}
+\def\downbracketfill#1#2{$\m@th \setbox \z@ \hbox {$\braceld$}
+                  \edef\@bracketheight{\the\ht\z@}\downbracketend{#1}{#2}
+                  \leaders \vrule \@height #1 \@depth \z@ \hfill
+                  \leaders \vrule \@height #1 \@depth \z@ \hfill
+\downbracketend{#1}{#2}$}
+\def\downbracketend#1#2{\vrule depth #2 width #1\relax} 
+
+\def\bridge#1{\overbracket[0.4pt][3pt]{#1}}
+
+\def\underbracket{%
+  \@ifnextchar [ %
+    {\@underbracket}%
+    {\@underbracket [\@bracketheight]}}
+\def\@underbracket[#1]{%
+  \@ifnextchar [ %
+    {\@under@bracket[#1]}%
+    {\@under@bracket[#1][0.4em]}}
+\def\@under@bracket[#1][#2]#3{%\message {Underbracket: #1,#2,#3}
+  \mathop {%
+    \vtop {%
+      \m@th \ialign {%
+	##\crcr $\hfil \displaystyle {#3}\hfil $%
+       \crcr \noalign %
+       {\kern 3\p@ \nointerlineskip }%
+	\upbracketfill {#1}{#2}
+       \crcr \noalign %
+       {\kern 3\p@ }%
+     }%
+   }%
+  }%
+  \limits%
+}
+\def\upbracketfill#1#2{%
+  $\m@th \setbox \z@ \hbox {$\braceld$}
+  \edef\@bracketheight{\the\ht\z@}\bracketend{#1}{#2}
+  \leaders \vrule \@height #1 \@depth \z@ \hfill
+  \leaders \vrule \@height #1 \@depth \z@ \hfill%
+  \bracketend{#1}{#2}$%
+}
+\def\bracketend#1#2{\vrule height #2 width #1\relax}
+
+\def\underbridge#1{\underbracket[0.4pt][3pt]{#1}}
+
+%--------------------------------------
+%Переопределение стиля библиографического списка
+%(для построения библиографии с тематическими разделами при помощи multibib)
+%http://www.tug.org/TeXnik/mainFAQ.cgi?file=bibtex/bibtex
+
+\def\BibUrl#1{\par\url{#1}}
+
+\renewenvironment{thebibliography}[1]
+		 {\subsection*{\bibname% вместо \subsection* можно вставить то, что требуется
+     }%
+      %\list{\@biblabel{\@arabic\c@enumiv}}% 
+      \list{\@arabic\c@enumiv.}%  здесь формат номера библиографич. записи
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+      
+%-------------------------------
+%XY-pic
+\RequirePackage{xy}
+\xyoption{arrow}
+\xyoption{matrix}
